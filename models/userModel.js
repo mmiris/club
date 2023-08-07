@@ -1,13 +1,22 @@
 import pool from '../config/db.js'
 
 class UserModel {
-  async createUser(username, password) {
+  async createUser(name, password) {
     try {
-      const sql = 'INSERT INTO user (name, password) VALUES (?, ?);'
-      const [result] = await pool.execute(sql, [username, password])
+      const sql = 'INSERT INTO user (name, password) VALUES (?, ?)'
+      const [result] = await pool.execute(sql, [name, password])
       return result.insertId
     } catch (err) {
-      console.error('Error while creating user:', err.message)
+      throw err
+    }
+  }
+
+  async checkUserExists(name) {
+    try {
+      const sql = 'SELECT * FROM user WHERE name = ?'
+      const [existingUser] = await pool.execute(sql, [name])
+      return existingUser
+    } catch (err) {
       throw err
     }
   }

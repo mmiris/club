@@ -13,3 +13,4 @@ const dbConfig = {
 }
 
 export { environment, port, dbConfig }
+export default port
