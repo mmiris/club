@@ -4,6 +4,6 @@ import authController from '../controllers/authController.js'
 
 const router = new Router()
 
-router.post('/login', authMiddleware.validateUserLogin, authController.login)
+router.post('/login', authMiddleware.validateUserLogin, authController.loginUser)
 
 export default router

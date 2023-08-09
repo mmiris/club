@@ -1,12 +1,15 @@
 import Koa from 'koa'
-import registerRoutes from './routes/index.js'
 import bodyParser from '@koa/bodyparser'
+import authMiddleware from './middlewares/authMiddleware.js'
+import registerRoutes from './routes/index.js'
 import port from './config/appConfig.js'
 import errorHandler from './utils/errorhandler.js'
 
 const app = new Koa()
 
 app.use(errorHandler())
+
+app.use(await authMiddleware.verifyAuth())
 app.use(bodyParser())
 
 registerRoutes(app)

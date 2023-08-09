@@ -1,11 +1,11 @@
 import pool from '../config/db.js'
 
 class UserModel {
-  async createUser(name, password) {
+  async registerUser(name, password) {
     try {
       const sql = 'INSERT INTO user (name, password) VALUES (?, ?)'
       const [result] = await pool.execute(sql, [name, password])
-      return result.insertId
+      return result
     } catch (err) {
       throw err
     }

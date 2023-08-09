@@ -11,4 +11,6 @@ router.post(
   userController.registerUser
 )
 
+router.get('/hello', userController.hello)
+
 export default router
