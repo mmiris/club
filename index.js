@@ -10,7 +10,7 @@ const app = new Koa()
 
 app.use(cors())
 
-app.use(errorHandler())
+// app.use(errorHandler())
 
 app.use(await authMiddleware.verifyAuth())
 app.use(bodyParser())

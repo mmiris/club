@@ -20,6 +20,16 @@ class UserModel {
       throw err
     }
   }
+
+  async addAvatar(userId, avatarUrl) {
+    try {
+      const sql = 'UPDATE `user` SET avatar_url = ? WHERE id = ?'
+      const [result] = await pool.execute(sql, [avatarUrl, userId])
+      return result
+    } catch (err) {
+      throw err
+    }
+  }
 }
 
 export default new UserModel()
