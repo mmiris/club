@@ -1,11 +1,6 @@
 import userModel from '../models/userModel.js'
 import { hashPassword, verifyPassword } from '../utils/cryptoHelpers.js'
-import {
-  ValidateError,
-  UserAlreadyExistsError,
-  UserNotFoundError,
-  AuthenticationError
-} from '../utils/errors.js'
+import { ValidateError, UserAlreadyExistsError, UserNotFoundError, AuthenticationError } from '../utils/errors.js'
 
 class UserMiddleware {
   async validateUserRegistration(ctx, next) {

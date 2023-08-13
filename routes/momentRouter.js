@@ -10,8 +10,10 @@ router.get('/', momentController.getMomentList)
 
 router.post('/', momentController.publishMoment)
 
-router.patch('/:id', authMiddleware.authResourcePermission, momentController.modifyMoment)
+router.patch('/:id', authMiddleware.authResourcePermission, momentController.updateMoment)
 
 router.delete('/:id', authMiddleware.authResourcePermission, momentController.deleteMoment)
+
+router.put('/:id/labels', authMiddleware.authResourceExists, momentController.addLabels)
 
 export default router

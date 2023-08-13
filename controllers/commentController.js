@@ -1,6 +1,22 @@
 import commentModel from '../models/commentModel.js'
 
 class CommentController {
+  async getComment(ctx) {
+    try {
+      const { momentId, limit, offset } = ctx.query
+
+      const result = await commentModel.getComment(momentId, limit, offset)
+
+      ctx.body = {
+        success: true,
+        message: 'Comment get succeed.',
+        data: { comment: result }
+      }
+    } catch (err) {
+      throw err
+    }
+  }
+
   async publishComment(ctx) {
     try {
       const userId = ctx.state.user.id
@@ -30,6 +46,29 @@ class CommentController {
     } catch (err) {
       throw err
     }
+  }
+
+  async updateComment(ctx) {
+    try {
+      const commentId = ctx.params.id
+      const content = ctx.request.body.content
+
+      await commentModel.updateComment(commentId, content)
+
+      ctx.body = { success: true, message: 'Comment modify succeed.', data: null }
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async deleteComment(ctx) {
+    try {
+      const commentId = ctx.params.id
+
+      await commentModel.deleteComment(commentId)
+
+      ctx.body = { success: true, message: 'Comment delete succeed.', data: null }
+    } catch (err) {}
   }
 }
 

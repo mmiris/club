@@ -14,7 +14,7 @@ class ValidateError extends CustomError {
 
 class UserAlreadyExistsError extends CustomError {
   constructor(message) {
-    super(message || 'User already exists.', 409)
+    super(message || 'Conflict. User already exists.', 409)
   }
 }
 
@@ -42,11 +42,18 @@ class UnauthorizedError extends CustomError {
   }
 }
 
+class ResourceAlreadyExistsError extends CustomError {
+  constructor(message) {
+    super(message || 'Conflict. Resource already exists.', 409)
+  }
+}
+
 export {
   ValidateError,
   UserAlreadyExistsError,
   UserNotFoundError,
   PermissionError,
   AuthenticationError,
-  UnauthorizedError
+  UnauthorizedError,
+  ResourceAlreadyExistsError
 }

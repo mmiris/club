@@ -1,4 +1,5 @@
 import momentModel from '../models/momentModel.js'
+import labelModel from '../models/labelModel.js'
 
 class MomentController {
   async getMoment(ctx) {
@@ -35,12 +36,12 @@ class MomentController {
     }
   }
 
-  async modifyMoment(ctx) {
+  async updateMoment(ctx) {
     try {
       const momentId = ctx.params.id
       const content = ctx.request.body.content
 
-      await momentModel.modifyMoment(momentId, content)
+      await momentModel.updateMoment(momentId, content)
 
       ctx.body = { success: true, message: 'Moment modify succeed.', data: null }
     } catch (err) {
@@ -58,6 +59,24 @@ class MomentController {
     } catch (err) {
       throw err
     }
+  }
+
+  async addLabels(ctx) {
+    const momentId = ctx.params.id
+    const momentLabels = ctx.request.body.labels
+    const notExistLabels = ctx.state.labels
+    const labels = []
+
+    await labelModel.createLabel(notExistLabels)
+
+    for (const label of momentLabels) {
+      const [result] = await labelModel.getLabel(label)
+      labels.push({ id: result.id })
+    }
+
+    const result = await momentModel.addLabels(momentId, labels)
+
+    ctx.body = { success: true, message: 'Labels add succeed.', data: result }
   }
 }
 
