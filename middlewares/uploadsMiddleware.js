@@ -8,32 +8,30 @@ const __dirname = dirname(__filename)
 
 class UploadsMiddleware {
   get avatarUpload() {
-    return multer({ dest: 'uploads/avatar' })
+    return multer({ dest: 'uploads/avatar' }).single('avatar')
   }
 
   get fileUpload() {
-    return multer({ dest: 'uploads/file' })
+    return multer({ dest: 'uploads/file' }).array('files')
   }
 
   async resizeImg(ctx, next) {
     const imgSizes = {
-      small: { width: 100, height: Jimp.AUTO },
-      medium: { width: 300, height: Jimp.AUTO },
+      small: { width: 200, height: Jimp.AUTO },
+      medium: { width: 400, height: Jimp.AUTO },
       large: { width: 800, height: Jimp.AUTO }
     }
     const imgs = []
-
     ctx.files.forEach((file) => imgs.push(file.filename))
 
     for (const img of imgs) {
-      const originalImg = await Jimp.read(path.join(__dirname, '../upload/file', img))
+      const originalImg = await Jimp.read(path.join(__dirname, '../uploads/file', img))
 
       for (const size in imgSizes) {
         const { width, height } = imgSizes[size]
+        const outputPath = path.join(__dirname, `../uploads/file/${size}_${img}`)
 
-        const resizedImg = originalImg.clone().resize(width, height)
-
-        const outputPath = path.join(__dirname, `../upload/file/${size}_${img}`)
+        const resizedImg = originalImg.resize(width, height)
         resizedImg.write(outputPath)
       }
     }

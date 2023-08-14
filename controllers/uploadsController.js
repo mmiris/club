@@ -23,19 +23,16 @@ class UploadsController {
   }
 
   async createFiles(ctx) {
-    console.log(ctx.files)
-    ctx.body = { message: 'successful!!!' }
-  }
+    try {
+      const userId = ctx.state.user.id
+      const momentId = ctx.request.body.id
+      const files = ctx.files
 
-  async downloadFile(ctx) {
-    const filename = ctx.params.filename
-    const filePath = path.join(__dirname, '../upload/avatar', filename)
-
-    const readableStream = fs.createReadStream(filePath)
-
-    ctx.type = 'image/png'
-
-    ctx.body = readableStream
+      const result = await uploadsModel.createFiles(userId, momentId, files)
+      ctx.body = { success: true, message: 'files upload succeed.', data: { result } }
+    } catch (err) {
+      throw err
+    }
   }
 }
 

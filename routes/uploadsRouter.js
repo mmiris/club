@@ -4,13 +4,7 @@ import uploadsController from '../controllers/uploadsController.js'
 
 const router = new Router({ prefix: '/uploads' })
 
-router.post('/avatar', uploadsMiddleware.avatarUpload.single('avatar'), uploadsController.createAvatar)
-router.post(
-  '/file',
-  uploadsMiddleware.fileUpload.array('files'),
-  uploadsMiddleware.resizeImg,
-  uploadsController.createFiles
-)
-// router.get('/file/:filename', uploadsController.downloadFile)
+router.post('/avatar', uploadsMiddleware.avatarUpload, uploadsController.createAvatar)
+router.post('/file', uploadsMiddleware.fileUpload, uploadsMiddleware.resizeImg, uploadsController.createFiles)
 
 export default router

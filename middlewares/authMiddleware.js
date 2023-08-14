@@ -16,7 +16,7 @@ class AuthMiddleware {
             return true
           }
         },
-        path: [/^\/register/, /^\/login/, /^\/uploads\/file/]
+        path: [/^\/register/, /^\/login/]
       })
     } catch (err) {
       throw err
